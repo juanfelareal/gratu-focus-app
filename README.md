@@ -71,11 +71,22 @@ En iPhone real y 2-3 Androids (incluir Samsung/Xiaomi, que matan servicios agres
 - [ ] Tag NFC: vincular, escanear con tag correcto, rechazar tag ajeno
 - [ ] Revocar permiso de Screen Time en Ajustes iOS → documentar (mitigación v2: Shortcut que bloquea Ajustes)
 
-## Roadmap corto
+## Roadmap
 
-- **v0.2:** racha real por días, historial semanal para el chart de stats, background tag reading (iOS universal link + Android intent filter para que el tag abra la app sola)
-- **v0.3 (modo estricto completo):** iOS `denyAppRemoval` + guía del Shortcut anti-Ajustes; Android Device Admin
+- ~~**v0.2:** racha real por días, historial semanal, ícono oficial, tag abre la app sola en Android (NDEF `gratufocus://toggle` + intent filter)~~ ✅ hecho
+- **v0.3 (modo estricto completo):** iOS `denyAppRemoval` + guía del Shortcut anti-Ajustes; Android Device Admin; background tag reading iOS (universal link — requiere dominio propio con AASA)
 - **v1.0:** modo "Monje" (`.all(except:)` — bloquear todo excepto whitelist), modos predefinidos LatAm (Trabajo, Estudio, Familia, Dormir), launcher minimalista Android
+
+## Probar el bloqueo REAL en Android (sin esperar a Apple)
+
+El APK de desarrollo se publica en [Releases](https://github.com/juanfelareal/gratu-focus-app/releases). En un Android:
+1. Descarga el APK desde Releases y ábrelo (permite "instalar apps desconocidas" si lo pide)
+2. Recorre el onboarding → concede **Acceso de uso** y **Mostrar sobre otras apps**
+3. Vincula un tag NFC real (cualquier NTAG213/215/216) — la app además graba en el tag la URL de lanzamiento
+4. Toca el tag → modo enfoque. Abre Instagram → aparece el muro de Gratu
+5. Con la app cerrada, acerca el tag → Android abre Gratu Focus y hace el toggle solo
+
+Para compilarlo localmente: `cd android && JAVA_HOME=/opt/homebrew/opt/openjdk@17 ./gradlew assembleDebug` (APK queda en `android/app/build/outputs/apk/debug/`).
 
 ## Estructura
 
