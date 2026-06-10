@@ -1,0 +1,59 @@
+{
+  "expo": {
+    "name": "Gratu Focus",
+    "slug": "gratu-focus",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F3F1EC",
+    "splash": {
+      "backgroundColor": "#F3F1EC",
+      "resizeMode": "contain",
+      "image": "./assets/icon.png"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gratu.focus",
+      "infoPlist": {
+        "UIBackgroundModes": [],
+        "NFCReaderUsageDescription": "Gratu Focus usa NFC para leer tu tag y activar el modo enfoque."
+      }
+    },
+    "android": {
+      "package": "com.gratu.focus",
+      "adaptiveIcon": {
+        "backgroundColor": "#F3F1EC",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["android.permission.NFC", "android.permission.VIBRATE"],
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": { "deploymentTarget": "16.4" },
+          "android": { "minSdkVersion": 26 }
+        }
+      ],
+      "expo-font",
+      [
+        "react-native-nfc-manager",
+        {
+          "nfcPermission": "Gratu Focus usa NFC para leer tu tag y activar el modo enfoque.",
+          "includeNdefEntitlement": true
+        }
+      ],
+      [
+        "react-native-device-activity",
+        {
+          "appleTeamId": "REEMPLAZAR_TEAM_ID",
+          "appGroup": "group.com.gratu.focus"
+        }
+      ]
+    ]
+  }
+}
