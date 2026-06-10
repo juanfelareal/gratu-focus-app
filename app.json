@@ -7,11 +7,6 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "backgroundColor": "#F3F1EC",
-    "splash": {
-      "backgroundColor": "#F3F1EC",
-      "resizeMode": "contain",
-      "image": "./assets/icon.png"
-    },
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.gratu.focus",

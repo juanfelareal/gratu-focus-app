@@ -33,5 +33,17 @@
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "gratu-blocker",
+          "react-native-device-activity",
+          "react-native-nfc-manager"
+        ],
+        "listUnknownPackages": false
+      }
+    }
+  }
 }
