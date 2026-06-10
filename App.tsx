@@ -16,7 +16,8 @@ import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import type { RootStackParamList } from './src/nav';
-import { nfcIsSupported } from './src/nfc';
+import { toggleFocus } from './src/focus';
+import { getLaunchTagId, nfcIsSupported } from './src/nfc';
 import { HowScreen } from './src/screens/How';
 import { MainScreen } from './src/screens/Main';
 import { PairTagScreen } from './src/screens/PairTag';
@@ -46,7 +47,15 @@ export default function App() {
   const focused = useStore((s) => s.focused);
 
   useEffect(() => {
-    nfcIsSupported();
+    nfcIsSupported().then(async () => {
+      // Android: si un tag NFC abrió la app (NDEF gratufocus://toggle),
+      // y es el tag vinculado, hace el toggle de una — sin tocar nada.
+      const launchTagId = await getLaunchTagId();
+      const { onboarded, tagId } = useStore.getState();
+      if (launchTagId && onboarded && tagId && launchTagId === tagId) {
+        toggleFocus();
+      }
+    });
   }, []);
 
   if (!fontsLoaded) {

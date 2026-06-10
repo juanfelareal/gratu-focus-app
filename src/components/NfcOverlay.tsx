@@ -2,7 +2,7 @@ import * as Haptics from 'expo-haptics';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Modal, StyleSheet, Text, View } from 'react-native';
 import { fonts, palette } from '../theme';
-import { nfcAvailable, scanTagId } from '../nfc';
+import { nfcAvailable, scanTag } from '../nfc';
 import { Orb } from './Orb';
 
 type Phase = 'hidden' | 'scanning' | 'done';
@@ -49,6 +49,8 @@ export function useTagScan() {
       doneLabel: string;
       expectedTagId?: string | null;
       simulate?: boolean;
+      /** Al vincular: graba la URL de lanzamiento en el tag. */
+      writeToggleUrl?: boolean;
       onSuccess: (tagId: string | null) => void;
     }) => {
       setStatusText('Buscando tu tag…');
@@ -59,7 +61,7 @@ export function useTagScan() {
       let ok = false;
 
       if (!opts.simulate && nfcAvailable) {
-        tagId = await scanTagId();
+        tagId = await scanTag({ writeToggleUrl: opts.writeToggleUrl });
         if (tagId == null) {
           setPhase('hidden'); // cancelado
           return;

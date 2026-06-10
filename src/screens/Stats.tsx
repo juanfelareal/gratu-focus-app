@@ -1,23 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { GlassCard, MonoLabel } from '../components/ui';
-import { fmtMin, sessionMinutes, useStore, useTheme } from '../store';
+import {
+  computeStreak,
+  currentWeek,
+  fmtMin,
+  sessionMinutes,
+  totalRecovered,
+  useStore,
+  useTheme,
+} from '../store';
 import { fonts } from '../theme';
 
 const DAY_LABELS = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
 
 export function StatsScreen() {
   const t = useTheme();
-  const recoveredMin = useStore((s) => s.recoveredMin);
+  const history = useStore((s) => s.history);
   const focusStartedAt = useStore((s) => s.focusStartedAt);
-  const streak = useStore((s) => s.streak);
 
-  const total = recoveredMin + sessionMinutes(focusStartedAt);
+  const session = sessionMinutes(focusStartedAt);
+  const total = totalRecovered(history) + session;
   const hours = total / 60;
   const todayIdx = (new Date().getDay() + 6) % 7; // lunes = 0
+  const streak = computeStreak(history);
 
-  // MVP: aún no hay historial por día — la barra de hoy lleva el total.
-  const values = DAY_LABELS.map((_, i) => (i === todayIdx ? Math.max(total, 8) : 0));
+  const week = currentWeek(history);
+  const values = week.map((v, i) => (i === todayIdx ? v + session : v));
   const max = Math.max(...values, 60);
 
   const equivalences: string[] = [

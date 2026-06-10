@@ -22,6 +22,7 @@ export function PairTagScreen() {
     scan({
       doneLabel: 'Tag vinculado',
       simulate: !nfcAvailable,
+      writeToggleUrl: true,
       onSuccess: (tagId) => {
         if (mode === 'relink') {
           setTagId(tagId);
